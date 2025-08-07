@@ -62,66 +62,29 @@
 
 ## 💻 環境別セットアップ
 
-### 🌐 Replit での実行（推奨）
-1. [Replit](https://replit.com) にログイン
-2. 「Create Repl」→「Import from GitHub」を選択
-3. このリポジトリのURLを入力
-4. プロジェクトが作成されたら：
-   - 左サイドバーの「Secrets」をクリック
-   - キー：`DISCORD_BOT_TOKEN`
-   - 値：先ほどコピーしたBotトークン
-   - 「Add new secret」をクリック
-5. 「Run」ボタンをクリックしてボット開始
-
-### 💻 ローカル環境での実行
-```bash
-# リポジトリをクローン
-git clone https://github.com/your-username/discord-spy-bot.git
-cd discord-spy-bot
-
-# 依存関係のインストール
-npm install
-
-# 環境変数ファイル作成
-echo "DISCORD_BOT_TOKEN=your_actual_token_here" > .env
-
-# ボットの起動
-npm start
-```
-
-### ☁️ VPS/クラウドでの実行
-```bash
-# サーバーにファイルをアップロード
-scp -r . user@your-server:/path/to/bot/
-
-# サーバーにSSH接続
-ssh user@your-server
-
-# プロジェクトディレクトリに移動
-cd /path/to/bot/
-
-# Node.jsとnpmのインストール（Ubuntu例）
-curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-sudo apt-get install -y nodejs
-
-# 依存関係のインストール
-npm install
-
-# 環境変数設定
-export DISCORD_BOT_TOKEN="your_actual_token_here"
-
-# バックグラウンド実行
-nohup npm start &
-```
+### 🌐 Koyeb での実行（推奨）
+1. [Koyeb](https://app.koyeb.com/) にログイン（Github経由で登録することをおすすめ！）
+2. 「Web service」→「GitHub」→「Install GitHub app」をクリック
+3. 「MyDiscordBots」を選択
+4. 「GPU Eco」>「Free」を選択
+5. Settings項目を以下で設定
+   -「Service type」: Web service
+   -「Builder」: Dockerfile
+   -「Environment variables and files」: Name:DISCORD_BOT_TOKEN, Value:'DiscordBotのトークン'
+   -「Ports」: Port:3000, Protocol:HTTP, Path:/
+   -「Health checks」: Port:3000, Protocol:HTTP, Grace Peropd:5, Interval:30, Restart limit:3, Timeout:5, Path:/, Method:Get   
+6. 「Deploy」ボタンをクリックしてボット開始
 
 ## 🎯 動作確認
 
 ### 1. ボット起動確認
-コンソールに以下のメッセージが表示されることを確認：
+「Deployment」の「Logs」に以下のメッセージが表示されることを確認：
 ```
-キープアライブサーバーがポート8000で稼働中
-Bot準備完了～ (Bot is ready!)
-小黒子#9577でログインしました！
+Instance created. Preparing to start...
+Bot準備完了～
+Instance is healthy. All health checks are passing.
+post:wake
+Woke up in post
 ```
 
 ### 2. Discord での動作テスト
@@ -144,109 +107,45 @@ Bot準備完了～ (Bot is ready!)
 3. 以下のコードを貼り付け：
 
 ```javascript
-var replitUrl = "https://6082561f-6b48-44d8-abf7-8a4a2f0e7dec-00-2ld5i3oi3elz3.kirk.replit.dev/";
-function keepBotAlive(){
- var json = {
-   'type':'wake'
- };
- sendGlitch(replitUrl, json);
-}
-
-function sendGlitch(uri, json){
- var params = {
-   'contentType' : 'application/json; charset=utf-8',
-   'method' : 'post',
-   'payload' : json,
-   'muteHttpExceptions': true
- };
- response = UrlFetchApp.fetch(uri, params);
+function keepBotAlive() {
+  const koyebUrl = 'https://stupid-fenelia-ron69-1a909b36.koyeb.app/';
+  
+  try {
+    const response = UrlFetchApp.fetch(koyebUrl, {
+      method: 'GET',
+      muteHttpExceptions: true
+    });
+    
+    console.log(`キープアライブ送信: ${new Date()}`);
+    console.log(`レスポンス: ${response.getResponseCode()}`);
+    
+    // POSTリクエストも送信（より確実）
+    UrlFetchApp.fetch(koyebUrl, {
+      method: 'POST',
+      payload: 'type=wake',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      muteHttpExceptions: true
+    });
+    
+  } catch (error) {
+    console.error('エラー:', error);
+  }
 }
 ```
+4. 「実行」ボタンをクリックし実行ログを確認する
+```
+22:28:32	お知らせ	実行開始
+22:28:33	情報	キープアライブ送信: Thu Aug 07 2025 22:28:33 GMT+0900 (Japan Standard Time)
+22:28:33	情報	レスポンス: 200
+22:28:34	お知らせ	実行完了
+```
 
-4. トリガーを設定
+5. トリガーを設定
   - 実行する関数を選択：keepBotAlive
   - イベントのソースを選択：時間主導型
   - 時間ベースとトリガーのタイプを選択：分ベースのタイマー
   - 時間の間隔を選択（分）：5分おき
- 
-
-## 🛠️ カスタマイズ
-
-### コマンドプレフィックス変更
-```javascript
-// server.js の19行目
-const prefix = '!'; // '.'から'!'に変更
-```
-
-### ボット名前変更
-```javascript
-// ヘルプメッセージのボット名を変更
-const helpMessage = `你好，私は[新しい名前]です。`;
-```
-
-### 新しいコマンド追加
-```javascript
-if (command === 'newcommand') {
-    message.channel.send('新しいコマンドです！');
-}
-```
-
-## 🔒 セキュリティベストプラクティス
-
-### Do's ✅
-- 環境変数でトークンを管理
-- .gitignore でシークレットファイルを除外
-- 定期的にトークンを再生成
-- 最小限の権限のみ付与
-
-### Don'ts ❌
-- トークンをコードに直接記載
-- パブリックリポジトリにトークンを含める
-- 不要な権限を付与
-- トークンを他人と共有
-
-## 🐛 トラブルシューティング
-
-### よくあるエラーと解決方法
-
-#### ❌ `DISCORD_BOT_TOKEN environment variable is required!`
-**原因**: Bot トークンが設定されていない
-**解決**: 環境変数を正しく設定してください
-
-#### ❌ `Error: Used disallowed intents`
-**原因**: 必要なインテントが有効になっていない
-**解決**: Discord Developer Portal でインテントを有効化
-
-#### ❌ `DiscordAPIError: Missing Permissions`
-**原因**: ボットに必要な権限がない
-**解決**: サーバー設定でボットの権限を確認・追加
-
-#### ❌ `チャンネル が見つかりません`
-**原因**: ボイスチャンネル名が間違っている
-**解決**: 正確なチャンネル名を入力
-
-### ログの確認方法
-```bash
-# Replit の場合
-Console タブでリアルタイムログを確認
-
-# ローカルの場合
-コマンドライン出力を確認
-
-# VPS の場合
-nohup.out ファイルまたは systemd ログを確認
-```
-
-## 📞 サポート
-
-問題が解決しない場合：
-1. GitHub Issues で問題を報告
-2. Discord サーバーでの動作確認
-3. 環境設定の再確認
-4. 最新版への更新確認
 
 ## 🎉 完了
-
-セットアップが完了しました！Discord サーバーでスパイゲームをお楽しみください。
-
-ボットが正常に動作したら、ぜひ GitHub でスターを付けてください！
