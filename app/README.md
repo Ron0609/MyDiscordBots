@@ -39,15 +39,7 @@
 
 ## セットアップ 🔧
 
-詳細なセットアップ手順は [README_SETUP.md](README_SETUP.md) をご覧ください。
-
-### 簡単セットアップ
-1. [Discord Developer Portal](https://discord.com/developers/applications) でボットを作成
-2. 環境変数 `DISCORD_BOT_TOKEN` を設定
-3. `npm install` で依存関係をインストール
-4. `npm start` でボット開始
-
-## 作者 👨‍💻
+セットアップ手順は [README_SETUP.md](README_SETUP.md) をご覧ください。
 
 Discord spy game bot for Japanese gaming communities
    
