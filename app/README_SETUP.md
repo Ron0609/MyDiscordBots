@@ -62,18 +62,20 @@
 
 ## 💻 環境別セットアップ
 
-### 🌐 Koyeb での実行（推奨）
-1. [Koyeb](https://app.koyeb.com/) にログイン（Github経由で登録することをおすすめ！）
-2. 「Web service」→「GitHub」→「Install GitHub app」をクリック
-3. 「MyDiscordBots」を選択
-4. 「GPU Eco」>「Free」を選択
-5. Settings項目を以下で設定
-   -「Service type」: Web service
-   -「Builder」: Dockerfile
-   -「Environment variables and files」: Name:DISCORD_BOT_TOKEN, Value:'DiscordBotのトークン'
-   -「Ports」: Port:3000, Protocol:HTTP, Path:/
-   -「Health checks」: Port:3000, Protocol:HTTP, Grace Peropd:5, Interval:30, Restart limit:3, Timeout:5, Path:/, Method:Get   
-6. 「Deploy」ボタンをクリックしてボット開始
+### 🌐 Render での実行（推奨）
+1.Render にログイン（GitHub経由で登録することをおすすめ！）
+2.「New」→「Web Service」→「Connect GitHub」をクリック
+3.「MyDiscordBots」を選択
+4.「Instance Type」>「Free」を選択
+5.Settings項目を以下で設定
+・「Service type」: Web Service
+・「Runtime」: Docker（Dockerfileを使用している場合）
+・「Environment variables」:
+　・Name: DISCORD_BOT_TOKEN
+　・Value: DiscordBotのトークン
+・「Region」: 任意（例: Oregon）
+・「Branch」: main
+・「Auto-Deploy」: Yes（推奨）
 
 ## 🎯 動作確認
 
