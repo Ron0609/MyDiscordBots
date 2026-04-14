@@ -110,38 +110,39 @@ Woke up in post
 
 ```javascript
 function keepBotAlive() {
-  const koyebUrl = 'https://stupid-fenelia-ron69-1a909b36.koyeb.app/';
-  
+  const url = 'https://mydiscordbots.onrender.com/';
+
   try {
-    const response = UrlFetchApp.fetch(koyebUrl, {
+    // 1回目：サーバーを起こす
+    UrlFetchApp.fetch(url, {
       method: 'GET',
       muteHttpExceptions: true
     });
-    
-    console.log(`キープアライブ送信: ${new Date()}`);
-    console.log(`レスポンス: ${response.getResponseCode()}`);
-    
-    // POSTリクエストも送信（より確実）
-    UrlFetchApp.fetch(koyebUrl, {
-      method: 'POST',
-      payload: 'type=wake',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
+
+    console.log("1回目アクセス（起動要求）: " + new Date());
+
+    // 10秒待つ（重要）
+    Utilities.sleep(10000);
+
+    // 2回目：起動確認
+    const response = UrlFetchApp.fetch(url, {
+      method: 'GET',
       muteHttpExceptions: true
     });
-    
+
+    console.log("2回目アクセス（確認）: " + new Date());
+    console.log("ステータス: " + response.getResponseCode());
+
   } catch (error) {
-    console.error('エラー:', error);
+    console.log("起動中（timeoutでも正常）: " + new Date());
   }
 }
 ```
 4. 「実行」ボタンをクリックし実行ログを確認する
 ```
-22:28:32	お知らせ	実行開始
-22:28:33	情報	キープアライブ送信: Thu Aug 07 2025 22:28:33 GMT+0900 (Japan Standard Time)
-22:28:33	情報	レスポンス: 200
-22:28:34	お知らせ	実行完了
+0:02:03	お知らせ	実行開始
+0:08:03	情報	起動中（timeoutでも正常）: Wed Apr 15 2026 00:08:03 GMT+0900 (Japan Standard Time)
+0:08:03	お知らせ	実行完了
 ```
 
 5. トリガーを設定
