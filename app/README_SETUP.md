@@ -71,7 +71,7 @@
 - 「Service type」: Web Service
 - 「Runtime」: Docker（Dockerfileを使用している場合）
 - 「Environment variables」:
-　- 　Name: DISCORD_BOT_TOKEN
+  - 　Name: DISCORD_BOT_TOKEN
   - 　Value: DiscordBotのトークン
 - 「Region」: 任意（例: Oregon）
 - 「Branch」: main
