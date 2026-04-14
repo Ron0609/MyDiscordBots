@@ -63,11 +63,11 @@
 ## 💻 環境別セットアップ
 
 ### 🌐 Render での実行（推奨）
-1. [Render](https://render.com/) にログイン（GitHub経由で登録することをおすすめ！）
+1.  [Render](https://render.com/) にログイン（GitHub経由で登録することをおすすめ！）
 2. 「New」→「Web Service」→「Connect GitHub」をクリック
 3. 「MyDiscordBots」を選択
 4. 「Instance Type」>「Free」を選択
-5. Settings項目を以下で設定
+5.  Settings項目を以下で設定
 - 「Service type」: Web Service
 - 「Runtime」: Docker（Dockerfileを使用している場合）
 - 「Environment variables」:
