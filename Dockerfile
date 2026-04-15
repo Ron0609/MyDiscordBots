@@ -11,7 +11,7 @@ COPY app/ .
 RUN npm install
 
 # ポートを開ける（Koyeb用）、使用してるポート番号にすること。
-EXPOSE 8000
+EXPOSE 10000
 
 # アプリの起動、コマンドを指定しよう。index.jsなら"node", "index.js"
 CMD ["node", "server.js"]
