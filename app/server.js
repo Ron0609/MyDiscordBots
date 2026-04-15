@@ -216,4 +216,12 @@ client.on('voiceStateUpdate', (oldState, newState) => {
     }
 });
 
-client.login(process.env.DISCORD_BOT_TOKEN);
+if (!process.env.DISCORD_BOT_TOKEN) {
+  console.error("❌ DISCORD_BOT_TOKEN is missing!");
+} else {
+  console.log("✅ TOKEN found, trying to login...");
+}
+
+client.login(process.env.DISCORD_BOT_TOKEN)
+  .then(() => console.log("✅ Discord login success"))
+  .catch(err => console.error("❌ Discord login failed:", err));
