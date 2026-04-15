@@ -10,7 +10,7 @@ COPY app/ .
 # 依存関係のインストール
 RUN npm install
 
-# ポートを開ける（Koyeb用）、使用してるポート番号にすること。
+# ポートを開ける（render用）、使用してるポート番号にすること。
 EXPOSE 10000
 
 # アプリの起動、コマンドを指定しよう。index.jsなら"node", "index.js"
