@@ -210,8 +210,8 @@ client.on('voiceStateUpdate', (oldState, newState) => {
 
 console.log("About to login Discord...");
 console.log("TOKEN length:", process.env.DISCORD_BOT_TOKEN?.length);
-console.log("TOKEN exists:", !!process.env.TOKEN);
-console.log("TOKEN preview:", process.env.TOKEN?.slice(0, 10));
+console.log("TOKEN exists:", !!process.env.DISCORD_BOT_TOKEN);
+console.log("TOKEN preview:", process.env.DISCORD_BOT_TOKEN?.slice(0, 10));
 
 client.login(process.env.DISCORD_BOT_TOKEN)
   .then(() => console.log("✅ Discord login success"))
