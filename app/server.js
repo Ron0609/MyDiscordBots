@@ -1,3 +1,4 @@
+console.log("=== BOT FILE VERSION 2026-04-15 ===");
 const http = require('http');
 const querystring = require('querystring');
 const { Client, Intents } = require('discord.js');
