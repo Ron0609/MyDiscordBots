@@ -47,7 +47,7 @@ client.once('ready', () => {
 
 client.on('messageCreate', async message => {
     // 检查消息内容是否为空或者只包含空白字符
-    if (!message.content.trim()) {
+    if (!message.content || !message.content.trim()) {
         console.log('Received empty message or whitespace only message.');
         return;
     }
