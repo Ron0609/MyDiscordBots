@@ -207,4 +207,6 @@ client.on('voiceStateUpdate', (oldState, newState) => {
     }
 });
 
-client.login(process.env.DISCORD_BOT_TOKEN);
+client.login(process.env.DISCORD_BOT_TOKEN)
+  .then(() => console.log("✅ Discord login success"))
+  .catch(err => console.error("❌ Discord login failed:", err));
