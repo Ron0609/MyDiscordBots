@@ -6,34 +6,41 @@ const prefix = '.';
 
 const selectedMembers = {}; // 用于保存选中的成员，按照频道 ID 存储
 
-http.createServer(function(req, res){
- if (req.method == 'POST'){
-   var data = "";
-   req.on('data', function(chunk){
-     data += chunk;
-   });
-   req.on('end', function(){
-     if(!data){
+// ===== HTTP SERVER（Render 用）=====
+
+const server = http.createServer(function(req, res){
+
+  if (req.method === 'POST') {
+
+    let data = "";
+
+    req.on('data', function(chunk){
+      data += chunk;
+    });
+
+    req.on('end', function(){
+      if(!data){
         console.log("No post data");
         res.end();
         return;
-     }
-     var dataObject = querystring.parse(data);
-     console.log("post:" + dataObject.type);
-     if(dataObject.type == "wake"){
-       console.log("Woke up in post");
-       res.end();
-       return;
-     }
-     res.end();
-   });
- }
- else if (req.method == 'GET'){
-   res.writeHead(200, {'Content-Type': 'text/plain'});
-   res.end('Discord Bot is active now\n');
- }
-});
+      }
+      const dataObject = querystring.parse(data);
+      console.log("post:" + dataObject.type);
+     
+      if(dataObject.type === "wake"){
+        console.log("Woke up in post");
+        res.end();
+        return;
+      }
+      res.end();
+    });
+  }
 
+  else if (req.method === 'GET') {
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.end('Discord Bot is active now\n');
+  }
+});
 // Render
 const PORT = process.env.PORT || 3000;
 
